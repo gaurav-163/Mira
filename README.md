@@ -40,7 +40,7 @@ npm --version
 ### Step 1: Clone the Repository
 
 ```bash
-git clone https://github.com/gaurav-163/Personal-Knowledge-Assistant.git
+git clone https://github.com/gaurav-163/Mira.git
 cd Personal-Knowledge-Assistant
 ```
 
@@ -92,9 +92,36 @@ cp /path/to/your/documents/*.pdf data/knowledge_base/
 
 ### Step 5: Start the Application
 
+**Option 1: Start Both Backend and Frontend (Recommended)**
+
 ```bash
-# Start backend and frontend with one command
+# Terminal 1: Start the backend
 ./start.sh
+
+# Terminal 2: Start the frontend
+cd frontend
+./start-frontend.sh
+```
+
+**Option 2: Manual Start with Uvicorn**
+
+```bash
+# Start backend with uvicorn
+uvicorn api:app --host 0.0.0.0 --port 8000 --reload
+
+# Or with uv (faster)
+uv run uvicorn api:app --host 0.0.0.0 --port 8000 --reload
+
+# In another terminal, start frontend
+cd frontend
+npm run dev
+```
+
+**Option 3: Backend Only**
+
+```bash
+./start.sh
+# Backend will run at http://localhost:8000
 ```
 
 **Access the application:**
