@@ -30,6 +30,7 @@ import {
 } from 'lucide-react'
 import ReactMarkdown from 'react-markdown'
 import axios from 'axios'
+import { useTypingEffect } from '@/src/hooks/useTypingEffect'
 
 interface Message {
   role: 'user' | 'assistant'
@@ -67,6 +68,9 @@ export default function Home() {
   const [searchQuery, setSearchQuery] = useState('')
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLTextAreaElement>(null)
+  
+  // Typing effect for "Mira"
+  const { displayedText: typedTitle, isComplete: titleComplete } = useTypingEffect('Mira', 150, 500)
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
@@ -201,11 +205,35 @@ export default function Home() {
   }
 
   return (
-    <div className="h-screen bg-slate-950 flex overflow-hidden">
+    <div className="h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 flex overflow-hidden">
       {/* Animated Background */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
+        <motion.div 
+          animate={{ 
+            scale: [1, 1.2, 1],
+            x: [0, 50, 0],
+            y: [0, 30, 0]
+          }}
+          transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-gradient-to-br from-blue-500/20 via-cyan-500/20 to-purple-500/20 rounded-full blur-3xl"
+        />
+        <motion.div 
+          animate={{ 
+            scale: [1, 1.3, 1],
+            x: [0, -50, 0],
+            y: [0, -30, 0]
+          }}
+          transition={{ duration: 25, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute bottom-1/4 right-1/4 w-[600px] h-[600px] bg-gradient-to-br from-purple-500/20 via-pink-500/20 to-cyan-500/20 rounded-full blur-3xl"
+        />
+        <motion.div 
+          animate={{ 
+            scale: [1, 1.1, 1],
+            rotate: [0, 180, 360]
+          }}
+          transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
+          className="absolute top-1/2 left-1/2 w-[400px] h-[400px] bg-gradient-to-br from-blue-500/10 to-cyan-500/10 rounded-full blur-3xl"
+        />
       </div>
 
       {/* Sidebar */}
@@ -216,13 +244,16 @@ export default function Home() {
             animate={{ x: 0 }}
             exit={{ x: -320 }}
             transition={{ type: 'spring', damping: 20 }}
-            className="w-80 bg-slate-900/50 backdrop-blur-xl border-r border-slate-700/50 flex flex-col relative z-10"
+            className="w-80 backdrop-blur-2xl border-r border-slate-700/30 flex flex-col relative z-10"
+            style={{
+              background: 'linear-gradient(135deg, rgba(15, 23, 42, 0.4) 0%, rgba(30, 41, 59, 0.3) 100%)'
+            }}
           >
             {/* Sidebar Header */}
             <div className="p-4 border-b border-slate-700/50">
               <button
                 onClick={createNewChat}
-                className="w-full flex items-center justify-center space-x-2 px-4 py-3 bg-blue-600 hover:bg-blue-500 rounded-xl text-white font-medium transition-all duration-200 shadow-lg hover:shadow-blue-500/50"
+                className="w-full flex items-center justify-center space-x-2 px-4 py-3 bg-gradient-to-r from-blue-600 via-cyan-600 to-blue-600 hover:from-blue-500 hover:via-cyan-500 hover:to-blue-500 rounded-xl text-white font-medium transition-all duration-300 shadow-lg hover:shadow-blue-500/50 transform hover:scale-105"
               >
                 <Plus className="w-5 h-5" />
                 <span>New Chat</span>
@@ -289,7 +320,9 @@ export default function Home() {
       {/* Main Content */}
       <div className="flex-1 flex flex-col relative z-10">
         {/* Header */}
-        <div className="bg-slate-900/30 backdrop-blur-xl border-b border-slate-700/50 px-6 py-4">
+        <div className="bg-slate-900/20 backdrop-blur-2xl border-b border-slate-700/30 px-6 py-4" style={{
+          background: 'linear-gradient(180deg, rgba(15, 23, 42, 0.3) 0%, rgba(30, 41, 59, 0.2) 100%)'
+        }}>
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
               <button
@@ -300,14 +333,35 @@ export default function Home() {
               </button>
               <div className="flex items-center space-x-3">
                 <div className="relative">
-                  <div className="w-10 h-10 rounded-xl bg-blue-600 flex items-center justify-center shadow-lg shadow-blue-500/50">
+                  <motion.div 
+                    animate={{ 
+                      boxShadow: [
+                        '0 0 20px rgba(59, 130, 246, 0.5)',
+                        '0 0 40px rgba(6, 182, 212, 0.6)',
+                        '0 0 20px rgba(59, 130, 246, 0.5)'
+                      ]
+                    }}
+                    transition={{ duration: 3, repeat: Infinity }}
+                    className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-600 via-cyan-500 to-purple-600 flex items-center justify-center"
+                  >
                     <Brain className="w-6 h-6 text-white" />
-                  </div>
-                  <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-slate-900 animate-pulse"></div>
+                  </motion.div>
+                  <motion.div 
+                    animate={{ scale: [1, 1.2, 1] }}
+                    transition={{ duration: 2, repeat: Infinity }}
+                    className="absolute -bottom-1 -right-1 w-4 h-4 bg-gradient-to-br from-green-400 to-emerald-500 rounded-full border-2 border-slate-900"
+                  />
                 </div>
                 <div>
-                  <h1 className="text-lg font-bold text-white">
-                    Knowledge Assistant
+                  <h1 className="text-xl font-bold bg-gradient-to-r from-blue-400 via-cyan-400 to-blue-400 bg-clip-text text-transparent">
+                    {typedTitle}
+                    {!titleComplete && (
+                      <motion.span
+                        animate={{ opacity: [1, 0] }}
+                        transition={{ duration: 0.8, repeat: Infinity }}
+                        className="inline-block w-0.5 h-5 bg-blue-400 ml-1"
+                      />
+                    )}
                   </h1>
                   <div className="flex items-center space-x-2 text-xs text-slate-500">
                     <div className="flex items-center space-x-1">
@@ -315,13 +369,24 @@ export default function Home() {
                       <span>Online</span>
                     </div>
                     <span>•</span>
-                    <span>AI-Powered</span>
+                    <span>AI-Powered Knowledge Assistant</span>
                   </div>
                 </div>
               </div>
             </div>
             
             <div className="flex items-center space-x-2">
+              {messages.length > 0 && (
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={clearChat}
+                  className="px-3 py-1.5 bg-red-500/10 border border-red-500/30 hover:bg-red-500/20 rounded-lg flex items-center space-x-2 transition-all duration-200 group"
+                >
+                  <Trash2 className="w-4 h-4 text-red-400 group-hover:text-red-300" />
+                  <span className="text-xs font-medium text-red-400 group-hover:text-red-300">Clear Chat</span>
+                </motion.button>
+              )}
               <div className="px-3 py-1.5 bg-blue-500/10 border border-blue-500/30 rounded-lg flex items-center space-x-2">
                 <TrendingUp className="w-4 h-4 text-blue-400" />
                 <span className="text-xs font-medium text-blue-400">{messages.length} messages</span>
@@ -337,53 +402,32 @@ export default function Home() {
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="text-center max-w-3xl"
+                className="text-center"
               >
-                <motion.div
-                  animate={{ 
-                    scale: [1, 1.05, 1],
-                    rotate: [0, 5, -5, 0]
-                  }}
-                  transition={{ 
-                    duration: 4,
-                    repeat: Infinity,
-                    ease: "easeInOut"
-                  }}
-                  className="inline-flex items-center justify-center w-24 h-24 rounded-2xl bg-blue-600 mb-8 shadow-2xl shadow-blue-500/50"
+                <motion.h1 
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.3, type: "spring" }}
+                  className="text-9xl font-bold"
                 >
-                  <Sparkles className="w-12 h-12 text-white" />
-                </motion.div>
-                
-                <h2 className="text-4xl font-bold text-white mb-4">
-                  Welcome to the Future of AI
-                </h2>
-                <p className="text-lg text-slate-400 mb-12">
-                  Ask anything. Get instant, accurate answers from your knowledge base or general knowledge.
-                </p>
-                
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-12">
-                  {[
-                    { icon: BookOpen, title: "Knowledge Base", desc: "Search through your documents", color: "blue" },
-                    { icon: Brain, title: "AI Intelligence", desc: "General knowledge answers", color: "cyan" },
-                    { icon: Zap, title: "Lightning Fast", desc: "2-3 second responses", color: "green" },
-                    { icon: Star, title: "Self-Reflection", desc: "Quality-checked answers", color: "orange" }
-                  ].map((feature, idx) => (
-                    <motion.div
-                      key={idx}
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: idx * 0.1 }}
-                      whileHover={{ scale: 1.05, y: -5 }}
-                      className="p-6 rounded-2xl bg-slate-800/30 border border-slate-700/50 hover:border-blue-500/50 transition-all duration-300 cursor-pointer group"
-                    >
-                      <div className={`w-12 h-12 rounded-xl bg-gradient-to-br from-${feature.color}-500 to-${feature.color}-600 flex items-center justify-center mb-4 group-hover:shadow-lg group-hover:shadow-${feature.color}-500/50 transition-all duration-300`}>
-                        <feature.icon className="w-6 h-6 text-white" />
-                      </div>
-                      <h3 className="text-lg font-semibold text-slate-200 mb-2">{feature.title}</h3>
-                      <p className="text-sm text-slate-500">{feature.desc}</p>
-                    </motion.div>
-                  ))}
-                </div>
+                  <motion.span 
+                    animate={{
+                      backgroundPosition: ['0% 50%', '100% 50%', '0% 50%']
+                    }}
+                    transition={{ duration: 5, repeat: Infinity, ease: "linear" }}
+                    className="bg-gradient-to-r from-blue-400 via-cyan-400 via-purple-400 to-blue-400 bg-clip-text text-transparent"
+                    style={{ backgroundSize: '200% auto' }}
+                  >
+                    {typedTitle}
+                    {!titleComplete && (
+                      <motion.span
+                        animate={{ opacity: [1, 0] }}
+                        transition={{ duration: 0.8, repeat: Infinity }}
+                        className="inline-block w-1 h-20 bg-cyan-400 ml-2"
+                      />
+                    )}
+                  </motion.span>
+                </motion.h1>
               </motion.div>
             </div>
           ) : (
@@ -541,7 +585,7 @@ export default function Home() {
         </div>
 
         {/* Input Area */}
-        <div className="border-t border-slate-700/50 bg-slate-900/30 backdrop-blur-xl p-6">
+        <div className="border-t border-slate-700/30 bg-gradient-to-t from-slate-900/40 to-slate-900/20 backdrop-blur-2xl p-6">
           <div className="max-w-4xl mx-auto">
             <div className="relative">
               <div className="flex items-end space-x-3">
@@ -553,9 +597,12 @@ export default function Home() {
                     onKeyPress={handleKeyPress}
                     placeholder="Ask me anything..."
                     rows={1}
-                    className="w-full px-6 py-4 bg-slate-800/50 border border-slate-700/50 rounded-2xl focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-transparent text-slate-100 placeholder-slate-500 resize-none max-h-32 backdrop-blur-xl"
+                    className="w-full px-6 py-4 border border-slate-700/50 rounded-2xl focus:outline-none focus:ring-2 focus:ring-cyan-500/50 focus:border-cyan-500/30 text-slate-100 placeholder-slate-400 resize-none max-h-32 backdrop-blur-xl transition-all duration-300"
+                    style={{
+                      background: 'linear-gradient(135deg, rgba(30, 41, 59, 0.4) 0%, rgba(15, 23, 42, 0.4) 100%)',
+                      minHeight: '56px'
+                    }}
                     disabled={loading}
-                    style={{ minHeight: '56px' }}
                   />
                   <div className="absolute right-4 bottom-4 flex items-center space-x-2">
                     <span className="text-xs text-slate-600">{input.length}</span>
@@ -566,7 +613,10 @@ export default function Home() {
                   whileTap={{ scale: 0.95 }}
                   onClick={handleSend}
                   disabled={loading || !input.trim()}
-                  className="p-4 bg-blue-600 hover:bg-blue-500 disabled:bg-slate-700 text-white rounded-2xl transition-all duration-200 disabled:cursor-not-allowed shadow-lg hover:shadow-blue-500/50 disabled:shadow-none"
+                  className="p-4 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500 disabled:from-slate-700 disabled:to-slate-700 text-white rounded-2xl transition-all duration-300 disabled:cursor-not-allowed shadow-lg disabled:shadow-none"
+                  style={{
+                    boxShadow: loading || !input.trim() ? 'none' : '0 10px 40px rgba(59, 130, 246, 0.4)'
+                  }}
                 >
                   {loading ? (
                     <Loader2 className="w-6 h-6 animate-spin" />
@@ -579,7 +629,13 @@ export default function Home() {
             
             <div className="flex items-center justify-between mt-4 px-2">
               <div className="flex items-center space-x-4 text-xs text-slate-600">
-                <button className="hover:text-blue-400 transition-colors">Clear chat</button>
+                <button 
+                  onClick={clearChat}
+                  className="hover:text-cyan-400 transition-colors flex items-center space-x-1 group"
+                >
+                  <Trash2 className="w-3 h-3 group-hover:text-cyan-400" />
+                  <span>Clear chat</span>
+                </button>
                 <span>•</span>
                 <span>Press Enter to send</span>
                 <span>•</span>

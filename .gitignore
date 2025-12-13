@@ -22,7 +22,7 @@ build/
 # Project specific
 .env
 data/vector_db/*
-!data/vector_db/.gitkeep
+!data/vector_db/.gitkeep/.pdf
 data/knowledge_base/*.pdf
 !data/knowledge_base/.gitkeep
 

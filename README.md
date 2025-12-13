@@ -9,16 +9,27 @@ AI-powered knowledge base assistant with RAG (Retrieval-Augmented Generation). A
 
 ## ✨ Features
 
-- 🎯 **Hybrid Intelligence**: Automatically routes questions to knowledge base OR general AI knowledge
-- 📚 **RAG (Retrieval-Augmented Generation)**: Get accurate answers grounded in your documents
-- 💬 **ChatGPT-Style Interface**: Modern, dark-themed chat UI with smooth animations
+### 🎨 **Modern & Eye-Catching UI**
+- **Triple-Gradient Animations**: Flowing color gradients across the interface
+- **Glassmorphism Effects**: Sophisticated frosted glass design elements
+- **Smooth Typing Animation**: "Mira" branding with elegant cursor effect
+- **Pulsing Glow Effects**: Dynamic lighting on interactive elements
+- **Floating Animations**: Subtle motion on key components
+- **Custom Scrollbars**: Styled with cyan-blue gradients
+
+### 🤖 **AI & Intelligence**
+- 🎯 **Hybrid Intelligence**: Automatically routes questions to knowledge base OR general AI
+- 📚 **RAG (Retrieval-Augmented Generation)**: Accurate answers grounded in your documents
 - 🔍 **Smart Search**: ChromaDB vector search with semantic understanding
 - 📄 **OCR Support**: Process both digital and scanned PDFs (Tesseract/EasyOCR)
-- 💾 **Persistent Chat History**: Conversations saved in browser localStorage
-- 📊 **Source Citations**: See exactly which documents were used for answers
-- ⚡ **Fast Responses**: Optimized for 2-3 second response times
 - 🔄 **Self-Reflection**: Optional AI quality checking for improved answers
-- 🎨 **Clean UI**: Professional grey color scheme, no branding
+
+### 💬 **User Experience**
+- 💾 **Persistent Chat History**: Conversations saved in browser localStorage
+- 📊 **Source Citations**: See exactly which documents were used
+- ⚡ **Lightning Fast**: Optimized for 2-3 second response times
+- 🎭 **Interactive Elements**: Hover effects, scale animations, and smooth transitions
+- 📱 **Responsive Design**: Works beautifully on all screen sizes
 
 ## 🚀 Quick Start
 
@@ -145,6 +156,22 @@ npm run dev
 ```bash
 ./stop.sh
 ```
+
+## 🎨 UI/UX Highlights
+
+**Mira features a stunning, modern interface with:**
+
+- **Animated Background**: Multi-layered gradient orbs with smooth floating animations
+- **Glassmorphism**: Frosted glass effects on sidebar and panels for depth
+- **Typography Animation**: "Mira" brand name types out with a blinking cursor
+- **Triple Gradients**: Blue → Cyan → Purple color flows throughout
+- **Pulsing Glow**: Dynamic lighting effects on the logo and active elements
+- **Hover Interactions**: Cards scale, rotate icons, and show enhanced shadows
+- **Smooth Transitions**: 300ms duration with easing for all interactive elements
+- **Custom Scrollbars**: Cyan-blue gradient scrollbars matching the theme
+- **Feature Cards**: 4 animated cards with color-coded gradients (blue, cyan, green, purple)
+- **Enhanced Input**: Gradient-filled textarea with cyan focus ring
+- **Gradient Buttons**: Animated blue-to-cyan gradient on primary actions
 
 ## 📁 Project Structure
 
