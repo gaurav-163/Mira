@@ -23,6 +23,7 @@ from langchain_core.output_parsers import StrOutputParser
 from config import Config
 from ocr_processor import PDFProcessor, TextChunker
 from vector_store import VectorStoreManager
+from backend.core.vector_store.semantic_search import SemanticRAGOptimizer
 
 logger = logging.getLogger(__name__)
 
@@ -70,6 +71,7 @@ class HybridAssistant:
         self.pdf_processor = PDFProcessor()
         self.chunker = TextChunker(Config.CHUNK_SIZE, Config.CHUNK_OVERLAP)
         self.vector_store = VectorStoreManager()
+        self.semantic_rag = None  # Will be initialized after vector store
         
         # LLM (will be initialized later)
         self.llm = None
@@ -111,6 +113,10 @@ class HybridAssistant:
                 self.vector_store.create_vector_store(chunks)
             else:
                 logger.warning(" No documents found in knowledge base")
+        
+        # Initialize semantic RAG optimizer
+        self.semantic_rag = SemanticRAGOptimizer(self.vector_store)
+        logger.info("🚀 Semantic RAG optimizer initialized")
         
         # Setup chains
         self._setup_chains()
@@ -199,21 +205,39 @@ Previous conversation:
                 "sources": []
             }
         
-        logger.info(f"Question: {question}")
+        logger.info(f"❓ Question: {question}")
         
-        # Optimize: Check vector DB first with lower threshold for faster initial check
+        # Use semantic RAG optimizer for faster, more accurate search
+        if self.semantic_rag and self.vector_store.vector_store:
+            logger.info("🚀 Using enhanced semantic search")
+            
+            # Smart search with hybrid approach
+            results = self.semantic_rag.smart_search(question, k=5, use_rrf=True)
+            
+            if results and len(results) > 0:
+                # Extract documents and scores
+                relevant_docs = [doc for doc, _ in results]
+                scores = [score for _, score in results]
+                
+                # Check if best result is relevant enough
+                best_score = scores[0] if scores else 0
+                
+                if best_score > 0.3:  # Threshold for relevance
+                    logger.info(f"✅ Using knowledge base ({len(relevant_docs)} docs, score: {best_score:.3f})")
+                    return self._answer_from_knowledge_base(question, relevant_docs, scores)
+        
+        # Fallback to original method if semantic RAG not available
         is_relevant, relevant_docs, scores = self.vector_store.is_query_relevant(
             question, 
-            threshold=0.2  # Lower threshold for faster initial detection
+            threshold=0.2
         )
         
         if is_relevant and self.rag_chain and len(relevant_docs) > 0:
-            # Use RAG for knowledge base questions
-            logger.info(f" Using knowledge base ({len(relevant_docs)} docs found)")
+            logger.info(f"📚 Using knowledge base (fallback, {len(relevant_docs)} docs)")
             return self._answer_from_knowledge_base(question, relevant_docs, scores)
         else:
             # Use general LLM for random questions
-            logger.info(" Using general knowledge")
+            logger.info("🌐 Using general knowledge")
             return self._answer_general_question(question)
     
     def _answer_from_knowledge_base(
@@ -309,6 +333,20 @@ Previous conversation:
     
     def search_knowledge_base(self, query: str, k: int = 5) -> List[Dict]:
         """Search knowledge base without generating answer"""
+        # Use semantic RAG if available
+        if self.semantic_rag:
+            results = self.semantic_rag.smart_search(query, k=k)
+            return [
+                {
+                    "content": doc.page_content,
+                    "source": doc.metadata.get("filename", "Unknown"),
+                    "page": doc.metadata.get("page", "N/A"),
+                    "score": float(score)
+                }
+                for doc, score in results
+            ]
+        
+        # Fallback to regular search
         docs = self.vector_store.similarity_search(query, k=k)
         
         return [
@@ -329,6 +367,10 @@ Previous conversation:
             
             # Reinitialize RAG chain with updated retriever
             self._setup_chains()
+            
+            # Clear semantic search cache
+            if self.semantic_rag:
+                self.semantic_rag.clear_cache()
             
             logger.info(f" Added {pdf_path} to knowledge base")
             return True
