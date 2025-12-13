@@ -1,0 +1,24 @@
+[project]
+name = "Mira"
+version = "0.1.0"
+requires-python = ">=3.13"
+dependencies = [
+    "chromadb>=0.4.18",
+    "easyocr>=1.7.0",
+    "fastapi>=0.104.0",
+    "langchain>=0.1.0",
+    "langchain-cohere>=0.1.0",
+    "langchain-community>=0.0.10",
+    "langchain-core>=0.1.0",
+    "langchain-groq>=0.0.1",
+    "langchain-openai>=0.0.5",
+    "pdf2image>=1.16.3",
+    "pillow>=10.1.0",
+    "pydantic>=2.5.0",
+    "pypdf>=3.17.0",
+    "pytesseract>=0.3.10",
+    "python-dotenv>=1.0.0",
+    "requests>=2.31.0",
+    "sentence-transformers>=2.2.2",
+    "uvicorn[standard]>=0.24.0",
+]

@@ -1,0 +1,31 @@
+# Core Framework
+fastapi>=0.104.0
+uvicorn[standard]>=0.24.0
+pydantic>=2.5.0
+
+# LangChain Ecosystem
+langchain>=0.1.0
+langchain-core>=0.1.0
+langchain-community>=0.0.10
+langchain-cohere>=0.1.0
+langchain-groq>=0.0.1
+langchain-openai>=0.0.5
+
+# PDF Processing
+pypdf>=3.17.0
+
+# OCR Support (optional but recommended)
+pytesseract>=0.3.10
+pdf2image>=1.16.3
+Pillow>=10.1.0
+easyocr>=1.7.0
+
+# Vector Store and Embeddings
+chromadb>=0.4.18
+sentence-transformers>=2.2.2
+
+# Environment Configuration
+python-dotenv>=1.0.0
+
+# Additional Dependencies
+requests>=2.31.0

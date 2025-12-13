@@ -1,0 +1,58 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.venv/
+venv/
+ENV/
+.env/
+*.egg-info/
+dist/
+build/
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+.qodo/
+
+# Project specific
+.env
+data/vector_db/*
+!data/vector_db/.gitkeep
+data/knowledge_base/*.pdf
+!data/knowledge_base/.gitkeep
+
+# Log files
+logs/*.log
+logs/*.log.*
+!logs/README.md
+*.log
+api.log
+
+# Frontend
+frontend/node_modules/
+frontend/.next/
+frontend/out/
+frontend/.turbo/
+node_modules/
+
+# Dependencies
+uv.lock
+package-lock.json
+yarn.lock
+
+# OS
+.DS_Store
+Thumbs.db
+*.tmp
+*.temp
+
+# Legacy/backup files
+legacy/
+*.bak
+*.old
+
