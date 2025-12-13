@@ -1,4 +1,4 @@
-# 🧠 Personal Knowledge Assistant
+# Mira
 
 AI-powered knowledge base assistant with RAG (Retrieval-Augmented Generation). Ask questions about your documents or get answers from general knowledge - all in a beautiful ChatGPT-style interface.
 
