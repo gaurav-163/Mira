@@ -21,9 +21,8 @@ build/
 
 # Project specific
 .env
-# Allow vector_db to be committed
-# data/vector_db/*
-# !data/vector_db/.gitkeep/.pdf
+data/vector_db/*
+!data/vector_db/.gitkeep
 # Allow PDFs in knowledge_base to be committed
 # data/knowledge_base/*.pdf
 !data/knowledge_base/.gitkeep
