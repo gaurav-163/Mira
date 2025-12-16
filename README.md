@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🤖 Mira
+#  Mira
 
 ### AI-Powered Knowledge Assistant with RAG & Redis Caching
 
