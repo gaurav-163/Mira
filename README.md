@@ -21,7 +21,8 @@ AI-powered knowledge base assistant with RAG (Retrieval-Augmented Generation). A
 - 🎯 **Hybrid Intelligence**: Automatically routes questions to knowledge base OR general AI
 - 📚 **Enhanced Semantic RAG**: Advanced retrieval with hybrid search and query expansion
 - 🚀 **Reciprocal Rank Fusion (RRF)**: Merges multiple search results for best accuracy
-- 💡 **Query Caching**: Smart caching for faster repeated queries
+- ⚡ **Redis Caching**: Lightning-fast responses for repeated questions
+- 💾 **Smart Cache Layer**: 24-hour TTL with automatic invalidation
 - 🔍 **Multi-Query Search**: Expands queries with variations for comprehensive results
 - 📄 **OCR Support**: Process both digital and scanned PDFs (Tesseract/EasyOCR)
 - 🔄 **Self-Reflection**: Optional AI quality checking for improved answers

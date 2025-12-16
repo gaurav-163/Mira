@@ -23,6 +23,7 @@ from config import Config
 from ocr_processor import PDFProcessor, TextChunker
 from vector_store import VectorStoreManager
 from backend.utils import get_service_logger
+from backend.core.cache import RedisCacheManager
 
 logger = get_service_logger()
 
@@ -72,6 +73,7 @@ class HybridAssistant:
         self.pdf_processor = PDFProcessor()
         self.chunker = TextChunker(Config.CHUNK_SIZE, Config.CHUNK_OVERLAP)
         self.vector_store = VectorStoreManager()
+        self.cache_manager = RedisCacheManager(ttl_hours=24)  # 24 hour cache
         
         # LLM (will be initialized later)
         self.llm = None
@@ -209,6 +211,16 @@ Previous conversation:
         
         logger.info(f" Question: {question}")
         
+        # Check cache first
+        logger.info(f"🔍 Cache enabled: {self.cache_manager.enabled}")
+        cached_response = self.cache_manager.get_cached_answer(question)
+        if cached_response:
+            logger.info("⚡ Returning cached response")
+            cached_response['from_cache'] = True
+            return cached_response
+        
+        logger.info("📝 Cache miss - generating new response")
+        
         # Optimize: Check vector DB first with lower threshold for faster initial check
         is_relevant, relevant_docs, scores = self.vector_store.is_query_relevant(
             question, 
@@ -218,11 +230,17 @@ Previous conversation:
         if is_relevant and self.rag_chain and len(relevant_docs) > 0:
             # Use RAG for knowledge base questions
             logger.info(f" Using knowledge base ({len(relevant_docs)} docs found)")
-            return self._answer_from_knowledge_base(question, relevant_docs, scores)
+            response = self._answer_from_knowledge_base(question, relevant_docs, scores)
+            # Cache the response
+            self.cache_manager.cache_answer(question, response)
+            return response
         else:
             # Use general LLM for random questions
             logger.info(" Using general knowledge")
-            return self._answer_general_question(question)
+            response = self._answer_general_question(question)
+            # Cache general responses too
+            self.cache_manager.cache_answer(question, response)
+            return response
     
     def _reflect_on_answer(self, question: str, answer: str, context: str) -> Dict:
         """Self-reflection: Validate answer quality and relevance"""

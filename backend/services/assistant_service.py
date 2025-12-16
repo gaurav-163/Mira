@@ -24,6 +24,7 @@ from config import Config
 from ocr_processor import PDFProcessor, TextChunker
 from vector_store import VectorStoreManager
 from backend.core.vector_store.semantic_search import SemanticRAGOptimizer
+from backend.core.cache import RedisCacheManager
 
 logger = logging.getLogger(__name__)
 
@@ -72,6 +73,7 @@ class HybridAssistant:
         self.chunker = TextChunker(Config.CHUNK_SIZE, Config.CHUNK_OVERLAP)
         self.vector_store = VectorStoreManager()
         self.semantic_rag = None  # Will be initialized after vector store
+        self.cache_manager = RedisCacheManager(ttl_hours=24)  # 24 hour cache
         
         # LLM (will be initialized later)
         self.llm = None
@@ -90,6 +92,12 @@ class HybridAssistant:
     def initialize(self, force_rebuild: bool = False) -> bool:
         """Initialize the assistant"""
         logger.info(f" Initializing Hybrid Assistant with {self.llm_provider.upper()}")
+        
+        # Log cache status
+        if self.cache_manager.enabled:
+            logger.info("✅ Redis cache is ENABLED and connected")
+        else:
+            logger.warning("⚠️ Redis cache is DISABLED - responses will not be cached")
         
         # Create LLM
         self.llm = LLMFactory.create(self.llm_provider)
@@ -207,6 +215,16 @@ Previous conversation:
         
         logger.info(f"❓ Question: {question}")
         
+        # Check cache first
+        logger.info(f"🔍 Cache enabled: {self.cache_manager.enabled}")
+        cached_response = self.cache_manager.get_cached_answer(question)
+        if cached_response:
+            logger.info("⚡ Returning cached response")
+            cached_response['from_cache'] = True
+            return cached_response
+        
+        logger.info("📝 Cache miss - generating new response")
+        
         # Use semantic RAG optimizer for faster, more accurate search
         if self.semantic_rag and self.vector_store.vector_store:
             logger.info("🚀 Using enhanced semantic search")
@@ -224,7 +242,10 @@ Previous conversation:
                 
                 if best_score > 0.3:  # Threshold for relevance
                     logger.info(f"✅ Using knowledge base ({len(relevant_docs)} docs, score: {best_score:.3f})")
-                    return self._answer_from_knowledge_base(question, relevant_docs, scores)
+                    response = self._answer_from_knowledge_base(question, relevant_docs, scores)
+                    # Cache the response
+                    self.cache_manager.cache_answer(question, response)
+                    return response
         
         # Fallback to original method if semantic RAG not available
         is_relevant, relevant_docs, scores = self.vector_store.is_query_relevant(
@@ -234,11 +255,17 @@ Previous conversation:
         
         if is_relevant and self.rag_chain and len(relevant_docs) > 0:
             logger.info(f"📚 Using knowledge base (fallback, {len(relevant_docs)} docs)")
-            return self._answer_from_knowledge_base(question, relevant_docs, scores)
+            response = self._answer_from_knowledge_base(question, relevant_docs, scores)
+            # Cache the response
+            self.cache_manager.cache_answer(question, response)
+            return response
         else:
             # Use general LLM for random questions
             logger.info("🌐 Using general knowledge")
-            return self._answer_general_question(question)
+            response = self._answer_general_question(question)
+            # Cache general responses too
+            self.cache_manager.cache_answer(question, response)
+            return response
     
     def _answer_from_knowledge_base(
         self, 
@@ -372,6 +399,9 @@ Previous conversation:
             if self.semantic_rag:
                 self.semantic_rag.clear_cache()
             
+            # Clear Redis cache when adding new documents
+            self.cache_manager.invalidate_cache()
+            
             logger.info(f" Added {pdf_path} to knowledge base")
             return True
             
@@ -380,15 +410,22 @@ Previous conversation:
             return False
     
     def clear_memory(self):
-        """Clear conversation history"""
+        """Clear conversation history and Redis cache"""
         self.chat_history.clear()
-        logger.info("🧹 Conversation memory cleared")
+        self.cache_manager.invalidate_cache()
+        logger.info("🧹 Conversation memory and cache cleared")
+    
+    def get_cache_stats(self) -> Dict:
+        """Get cache statistics"""
+        return self.cache_manager.get_cache_stats()
     
     def get_stats(self) -> Dict:
         """Get assistant statistics"""
-        return {
+        stats = {
             "llm_provider": self.llm_provider,
             "is_initialized": self.is_initialized,
             "vector_store": self.vector_store.get_stats(),
-            "memory_messages": len(self.chat_history.messages)
+            "memory_messages": len(self.chat_history.messages),
+            "cache": self.get_cache_stats()
         }
+        return stats
