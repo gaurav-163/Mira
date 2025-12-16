@@ -11,27 +11,26 @@
 [![Next.js](https://img.shields.io/badge/next.js-14.2.0-black.svg)](https://nextjs.org/)
 [![Redis](https://img.shields.io/badge/redis-7.0+-red.svg)](https://redis.io/)
 [![License](https://img.shields.io/badge/license-MIT-orange.svg)](LICENSE)
-[![GitHub Stars](https://img.shields.io/github/stars/gaurav-163/Mira?style=social)](https://github.com/gaurav-163/Mira)
 
-[Features](#-key-features) • [Demo](#-demo) • [Quick Start](#-quick-start) • [Documentation](#-documentation) • [Contributing](#-contributing)
+[Features](#-key-features) • [Quick Start](#-quick-start) • [Documentation](#-documentation) • [API](#-api-reference) • [Contributing](#-contributing)
 
 </div>
 
 ---
 
-## 📸 Demo
+## 📸 Screenshots
 
 <div align="center">
 
-### Chat Interface
+### Modern Chat Interface
 <img src="media/Front.png" alt="Mira Chat Interface" width="800"/>
 
-*Modern glassmorphism UI with smooth animations, gradient backgrounds, and typing effects*
+*Glassmorphism UI with gradient animations and typing effects*
 
 ### Knowledge Base Dashboard
-<img src="media/knowledge_base.png" alt="Knowledge Base Management" width="800"/>
+<img src="media/knowledge_base.png" alt="Knowledge Base" width="800"/>
 
-*Intuitive document management with drag-and-drop PDF upload and vector indexing*
+*Document management with real-time vector indexing*
 
 </div>
 
@@ -39,175 +38,203 @@
 
 ## ✨ Key Features
 
-### 🚀 **Performance & Intelligence**
+### ⚡ **Performance**
+- 🚀 **Redis Caching**: 490x faster responses (14.7s → 0.03s)
+- 🔄 **Dual Redis Architecture**: Local + cloud fallback
+- 📊 **Smart Cache**: 24-hour TTL with auto-invalidation
+- ⚡ **Optimized RAG**: Hybrid search with query expansion
 
-| Feature | Description | Impact |
-|---------|-------------|--------|
-| ⚡ **Redis Caching** | Intelligent response caching with 24-hour TTL | **490x faster** responses (14s → 0.03s) |
-| 📚 **Semantic RAG** | Hybrid search with query expansion & RRF algorithm | 95%+ retrieval accuracy |
-| 🎯 **Dual Redis** | Local primary + cloud fallback architecture | 99.9% cache availability |
-| 🔍 **Smart Routing** | Automatic KB vs. general knowledge detection | Zero manual categorization |
-| 📄 **OCR Processing** | Tesseract & EasyOCR support for scanned PDFs | 100% document compatibility |
+### 🤖 **AI Capabilities**
+- 🎯 **Hybrid Intelligence**: Auto-route between knowledge base & general AI
+- 📚 **Semantic Search**: Advanced retrieval with RRF ranking
+- 🔍 **Multi-Query**: Query expansion for better accuracy
+- 📄 **OCR Support**: Process scanned PDFs (Tesseract/EasyOCR)
 
-### 🎨 **Modern User Interface**
+### 🎨 **Modern UI**
+- ✨ **Glassmorphism**: Frosted glass design elements
+- 🌈 **Animated Gradients**: Flowing blue-cyan-purple colors
+- ⌨️ **Typing Effect**: Smooth "Mira" branding animation
+- 💫 **Smooth Transitions**: Hover effects and scale animations
+- 📱 **Responsive**: Works on desktop, tablet, and mobile
 
-<table>
-<tr>
-<td width="50%">
+---
 
-**Design Elements**
-- ✨ Glassmorphism effects
-- 🌈 Triple-gradient animations
-- ⌨️ Smooth typing effects
-- 💫 Floating UI components
-- 🎯 Pulsing glow accents
+## 📋 Prerequisites
 
-</td>
-<td width="50%">
+| Component | Version | Check Command |
+|-----------|---------|---------------|
+| **Python** | 3.10+ | `python --version` or `python3 --version` |
+| **Node.js** | 18+ | `node --version` |
+| **npm** | 9+ | `npm --version` |
+| **Redis** | 7.0+ | `redis-server --version` or `redis-cli --version` |
+| **Git** | Any | `git --version` |
 
-## 🚀 Quick Start
+---
 
-### System Requirements
+## 🚀 Installation
 
-<table>
-<tr>
-<td><b>Component</b></td>
-<td><b>Minimum Version</b></td>
-<td><b>Installation</b></td>
-</tr>
-<tr>
-<td>Python</td>
-<td>3.10+</td>
-<td><code>python --version</code></td>
-</tr>
-<tr>
-<td>Node.js</td>
-<td>18.0+</td>
-<td><code>node --version</code></td>
-</tr>
-<tr>
-<td>Redis</td>
-<td>7.0+</td>
-<td><code>redis-server --version</code></td>
-</tr>
-<tr>
-<td>Tesseract OCR</td>
-<td>4.0+</td>
-<td><code>tesseract --version</code></td>
-</tr>
-</table>
-
-### Installation
-
-#### 1️⃣ **Install Redis** (Required for caching)
+### Step 1: Install Prerequisites
 
 <details>
-<summary><b>Ubuntu/Debian</b></summary>
+<summary><b>🪟 Windows</b></summary>
+
+```powershell
+# Install Chocolatey (if not installed)
+# Run PowerShell as Administrator
+Set-ExecutionPolicy Bypass -Scope Process -Force
+[System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072
+iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
+
+# Install Python
+choco install python --version=3.10.0 -y
+
+# Install Node.js
+choco install nodejs-lts -y
+
+# Install Redis (use Memurai - Redis alternative for Windows)
+choco install memurai-developer -y
+
+# OR download Redis for Windows from:
+# https://github.com/microsoftarchive/redis/releases
+# Extract and run redis-server.exe
+
+# Install Tesseract OCR (optional, for scanned PDFs)
+choco install tesseract -y
+
+# Restart PowerShell and verify
+python --version
+node --version
+npm --version
+redis-server --version
+```
+
+**Alternative: Manual Installation**
+1. **Python**: Download from [python.org](https://www.python.org/downloads/)
+2. **Node.js**: Download from [nodejs.org](https://nodejs.org/)
+3. **Redis**: Download [Memurai](https://www.memurai.com/get-memurai) or [Redis for Windows](https://github.com/tporadowski/redis/releases)
+4. **Tesseract**: Download from [UB-Mannheim](https://github.com/UB-Mannheim/tesseract/wiki)
+
+</details>
+
+<details>
+<summary><b>🐧 Linux (Ubuntu/Debian)</b></summary>
 
 ```bash
-sudo apt-get update
-sudo apt-get install redis-server
+# Update package list
+sudo apt update
+
+# Install Python 3.10+
+sudo apt install python3 python3-pip python3-venv -y
+
+# Install Node.js 18+
+curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
+sudo apt install nodejs -y
+
+# Install Redis
+sudo apt install redis-server -y
 sudo systemctl enable redis-server
 sudo systemctl start redis-server
-redis-cli ping  # Should return: PONG
+
+# Install Tesseract OCR (optional)
+sudo apt install tesseract-ocr -y
+
+# Verify installations
+python3 --version
+node --version
+npm --version
+redis-server --version
 ```
+
 </details>
 
 <details>
-<summary><b>macOS</b></summary>
+<summary><b>🍎 macOS</b></summary>
 
 ```bash
+# Install Homebrew (if not installed)
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+# Install Python
+brew install python@3.10
+
+# Install Node.js
+brew install node@18
+
+# Install Redis
 brew install redis
 brew services start redis
-redis-cli ping  # Should return: PONG
+
+# Install Tesseract OCR (optional)
+brew install tesseract
+
+# Verify installations
+python3 --version
+node --version
+npm --version
+redis-server --version
 ```
+
 </details>
 
-<details>
-<summary><b>Windows</b></summary>
+---
 
-```bash
-# Download from: https://github.com/microsoftarchive/redis/releases
-#### 2️⃣ **Clone Repository**
+### Step 2: Clone Repository
 
 ```bash
 git clone https://github.com/gaurav-163/Mira.git
 cd Mira
 ```
 
-#### 3️⃣ **Configure Environment**
+---
 
+### Step 3: Configure Environment Variables
+
+**Linux/macOS:**
 ```bash
-# Copy environment template
 cp .env.example .env
+nano .env  # or vim, code, etc.
 ```
 
-Edit `.env` with your API credentials:
+**Windows (PowerShell):**
+```powershell
+copy .env.example .env
+notepad .env  # or code .env
+```
+
+**Edit `.env` with your API keys:**
 
 ```env
-# LLM Provider (choose one)
-LLM_PROVIDER=cohere
+# Choose your LLM provider
+LLM_PROVIDER=cohere          # Options: cohere, groq, openai
 
-# API Keys (get free keys from providers)
-COHERE_API_KEY=your_cohere_key_here
-GROQ_API_KEY=your_groq_key_here
-OPENAI_API_KEY=your_openai_key_here
+# Get free API keys from:
+# Cohere: https://dashboard.cohere.com/api-keys (RECOMMENDED - Free tier)
+# Groq: https://console.groq.com/keys (10x faster)
+# OpenAI: https://platform.openai.com/api-keys (Paid)
 
-# Redis Configuration (auto-configured, optional override)
+COHERE_API_KEY=your-cohere-key-here
+GROQ_API_KEY=your-groq-key-here
+OPENAI_API_KEY=your-openai-key-here
+
+# Redis Configuration (defaults work for local Redis)
 REDIS_HOST=127.0.0.1
 REDIS_PORT=6379
+# REDIS_PASSWORD=  # Optional
+
+# Optional: Self-reflection (improves quality, adds 2-3s)
+ENABLE_REFLECTION=false
 ```
 
-<details>
-<summary><b>🔑 Get Free API Keys</b></summary>
+---
 
-| Provider | Speed | Free Tier | Best For | Get Key |
-|----------|-------|-----------|----------|---------|
-| **Cohere** | Fast | ✅ Generous | Production | [dashboard.cohere.com](https://dashboard.cohere.com/api-keys) |
-| **Groq** | Ultra-fast | ✅ Limited | Development | [console.groq.com](https://console.groq.com/keys) |
-| **OpenAI** | Standard | ❌ Paid | Enterprise | [platform.openai.com](https://platform.openai.com/api-keys) |
+### Step 4: Install Dependencies
 
-</details>
-
-#### 4️⃣ **Install Dependencies**
-
+**Linux/macOS:**
 ```bash
-# Backend dependencies
-pip install -r requirements.txt
+# Create virtual environment (recommended)
+python3 -m venv .venv
+source .venv/bin/activate
 
-# Or use uv (recommended, faster)
-pip install uv
-uv pip install -r requirements.txt
-
-# Frontend dependencies
-cd frontend
-npm install --legacy-peer-deps
-cd ..
-```
-
-#### 5️⃣ **Add Your Documents**
-
-```bash
-# Create knowledge base directory
-mkdir -p data/knowledge_base
-
-# Add your PDF files
-cp /path/to/your/*.pdf data/knowledge_base/
-
-# Example: research papers, documentation, books, manuals
-```**Cohere** (Recommended - Free tier available)
-   - Visit: https://dashboard.cohere.com/api-keys
-   - Sign up and copy your API key
-   - Paste in `.env`: `COHERE_API_KEY=your-key-here`
-
-2. **Groq** (Optional - 10x faster but needs valid key)
-   - Visit: https://console.groq.com/keys
-   - Sign up and copy your API key
-   - Paste in `.env`: `GROQ_API_KEY=your-key-here`
-
-### Step 3: Install Dependencies
-
-```bash
 # Install Python dependencies
 pip install -r requirements.txt
 
@@ -217,321 +244,275 @@ npm install
 cd ..
 ```
 
-### Step 4: Add Your Documents
+**Windows (PowerShell):**
+```powershell
+# Create virtual environment
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
 
+# If execution policy error, run:
+# Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+
+# Install Python dependencies
+pip install -r requirements.txt
+
+# Install frontend dependencies
+cd frontend
+npm install
+cd ..
+```
+
+**Windows (Command Prompt):**
+```cmd
+# Create virtual environment
+python -m venv .venv
+.venv\Scripts\activate.bat
+
+# Install Python dependencies
+pip install -r requirements.txt
+
+# Install frontend dependencies
+cd frontend
+npm install
+cd ..
+```
+
+---
+
+### Step 5: Add Your Documents (Optional)
+
+**Linux/macOS:**
 ```bash
-# Create knowledge base directory if it doesn't exist
+# Create knowledge base directory
 mkdir -p data/knowledge_base
 
 # Copy your PDF files
-cp /path/to/your/documents/*.pdf data/knowledge_base/
-
-# Example: Copy research papers, books, documentation, etc.
+cp ~/Documents/*.pdf data/knowledge_base/
 ```
 
-### Step 5: Start Redis (Important!)
+**Windows (PowerShell):**
+```powershell
+# Create knowledge base directory
+New-Item -ItemType Directory -Force -Path data\knowledge_base
 
+# Copy your PDF files
+Copy-Item "C:\Users\YourName\Documents\*.pdf" -Destination "data\knowledge_base\"
+```
+
+---
+
+### Step 6: Start Redis Server
+
+**Linux:**
 ```bash
-# Start Redis server (required for caching)
-redis-server
+# Check if Redis is running
+redis-cli ping
+# Should return: PONG
 
-# Or as a background service
+# If not running, start it
 sudo systemctl start redis
 
-# Verify Redis is running
-redis-cli ping
-# Should respond: PONG
+# Enable auto-start on boot
+sudo systemctl enable redis
 ```
 
-### Step 6: Start the Application
-
-**Option 1: Start Both Backend and Frontend (Recommended)**
-
+**macOS:**
 ```bash
-# Terminal 1: Start the backend
-./start.sh
+# Check if Redis is running
+redis-cli ping
 
-# Terminal 2: Start the frontend
+# If not running
+brew services start redis
+
+# Or run in foreground
+redis-server
+```
+
+**Windows:**
+```powershell
+# If using Memurai
+net start Memurai
+
+# OR if using Redis for Windows
+# Navigate to Redis directory and run:
+redis-server.exe
+
+# In another terminal, verify
+redis-cli.exe ping
+# Should return: PONG
+```
+
+---
+
+## 🏃 Running the Application
+
+### Method 1: Using Start Scripts (Recommended for Linux/macOS)
+
+**Terminal 1 - Backend:**
+```bash
+chmod +x start.sh  # First time only
+./start.sh
+```
+
+**Terminal 2 - Frontend:**
+```bash
 cd frontend
+chmod +x start-frontend.sh  # First time only
 ./start-frontend.sh
 ```
 
-**Option 2: Manual Start with Uvicorn**
+### Method 2: Manual Start (Works on All Platforms)
 
+**Terminal 1 - Backend:**
+
+**Linux/macOS:**
 ```bash
-# Start backend with uvicorn
+source .venv/bin/activate
 uvicorn api:app --host 0.0.0.0 --port 8000 --reload
-
-# Or with uv (faster)
-**Access the application:**
-- 🌐 **Frontend**: http://localhost:3000
-- 🔧 **API**: http://localhost:8000
-- 📖 **API Docs**: http://localhost:8000/docs
-- 📊 **Cache Stats**: http://localhost:8000/api/cache/stats
-
-### Step 7: Use the Assistant
-
-**Option 3: Backend Only (API Mode)**
-
-```bash
-./start.sh
-# Backend will run at http://localhost:8000
 ```
 
-**Access the application:**
-- 🌐 **Frontend**: http://localhost:3000
-- 🔧 **API**: http://localhost:8000
-- 📖 **API Docs**: http://localhost:8000/docs
+**Windows (PowerShell):**
+```powershell
+.\.venv\Scripts\Activate.ps1
+uvicorn api:app --host 0.0.0.0 --port 8000 --reload
+```
 
-### Step 6: Use the Assistant
+**Windows (Command Prompt):**
+```cmd
+.venv\Scripts\activate.bat
+uvicorn api:app --host 0.0.0.0 --port 8000 --reload
+```
 
-1. Open http://localhost:3000 in your browser
-2. Wait for "Ready" status (green dot in top right)
+**Terminal 2 - Frontend:**
+
+**All Platforms:**
+```bash
+cd frontend
+npm run dev
+```
+
+### Method 3: Python Direct Start (All Platforms)
+
+**Terminal 1 - Backend:**
+```bash
+# Activate virtual environment first
+python api.py
+# OR
+python3 api.py
+```
+
+**Terminal 2 - Frontend:**
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+---
+
+## 🌐 Access the Application
+
+Once both servers are running, open your browser:
+
+| Service | URL | Description |
+|---------|-----|-------------|
+| **Frontend** | http://localhost:3000 | Main user interface |
+| **Backend API** | http://localhost:8000 | REST API server |
+| **API Docs** | http://localhost:8000/docs | Interactive Swagger docs |
+| **Cache Stats** | http://localhost:8000/api/cache/stats | Redis cache statistics |
+
+### Initial Setup
+
+1. Open **http://localhost:3000** in your browser
+2. Wait for **green "Online" indicator** in header (10-15 seconds)
 3. Start asking questions!
 
-**Example questions:**
-- "What is data warehousing?" (from your docs)
-- "Explain the main concepts" (from your docs)
-- "What is Python?" (general knowledge)
+---
 
-### Stop the Application
+## 📖 Usage Examples
 
+### Knowledge Base Questions (from your PDFs)
+```
+- "What is data warehousing?"
+- "Explain the main concepts in chapter 3"
+- "Summarize the key findings"
+- "What does the document say about machine learning?"
+```
+
+### General Knowledge Questions
+```
+- "What is Python?"
+- "Explain quantum computing"
+- "How does Redis caching work?"
+- "What's the difference between SQL and NoSQL?"
+```
+
+### Redis Cache in Action
+
+**First Time (Cache MISS):**
+- Question: "What is data warehousing?"
+- Response Time: **~14.7 seconds**
+- Cached: **No**
+
+**Second Time (Cache HIT):**
+- Same Question: "What is data warehousing?"
+- Response Time: **~0.03 seconds** ⚡
+- Cached: **Yes**
+- **490x faster!** 🚀
+
+---
+
+## 🛑 Stopping the Application
+
+**Linux/macOS:**
 ```bash
+# Use stop script
 ./stop.sh
+
+# OR press Ctrl+C in both terminals
 ```
 
-## 🎨 UI/UX Highlights
+**Windows (PowerShell/CMD):**
+```powershell
+# Press Ctrl+C in both terminals
 
-**Mira features a stunning, modern interface with:**
+# OR manually kill processes
+# Find processes
+Get-Process python,node
 
-- **Animated Background**: Multi-layered gradient orbs with smooth floating animations
-- **Glassmorphism**: Frosted glass effects on sidebar and panels for depth
-- **Typography Animation**: "Mira" brand name types out with a blinking cursor
-- **Triple Gradients**: Blue → Cyan → Purple color flows throughout
-- **Pulsing Glow**: Dynamic lighting effects on the logo and active elements
-- **Hover Interactions**: Cards scale, rotate icons, and show enhanced shadows
-- **Smooth Transitions**: 300ms duration with easing for all interactive elements
-- **Custom Scrollbars**: Cyan-blue gradient scrollbars matching the theme
-- **Feature Cards**: 4 animated cards with color-coded gradients (blue, cyan, green, purple)
-- **Enhanced Input**: Gradient-filled textarea with cyan focus ring
-- **Gradient Buttons**: Animated blue-to-cyan gradient on primary actions
-## 📁 Project Structure
-
-```
-Mira/
-├── backend/                    # Backend application
-│   ├── core/                  # Core business logic
-│   │   ├── llm/              # LLM providers and factory
-│   │   ├── vector_store/     # Vector database + semantic search
-│   │   ├── cache/            # Redis cache manager
-│   │   └── document_processing/  # PDF and text processing
-│   ├── services/             # Business services (assistant)
-│   ├── api/                  # API routes and endpoints
-│   ├── models/               # Data models
-│   └── utils/                # Utility functions & logging
-│
-├── frontend/                  # Next.js frontend application
-│   ├── app/                  # Next.js app directory
-│   │   ├── page.tsx         # Main chat interface
-│   │   └── globals.css      # Global styles & animations
-│   └── src/                  # Source code
-│       ├── components/       # React components
-│       ├── hooks/           # Custom React hooks (typing effect)
-│       ├── lib/             # Utility libraries
-│       └── types/           # TypeScript types
-│
-├── data/                      # Data directory
-│   ├── knowledge_base/       # PDF documents (tracked in git)
-│   └── vector_db/            # ChromaDB storage (gitignored)
-│
-├── media/                     # Screenshots and assets
-│   ├── Front.png            # Chat interface screenshot
-│   └── knowledge_base.png   # KB management screenshot
-│
-├── Docs/                      # Documentation
-├── logs/                      # Application logs
-├── scripts/                   # Utility scripts
-│
-├── api.py                     # FastAPI application entry
-├── assistant.py               # Main assistant logic
-├── config.py                  # Configuration management
-├── vector_store.py           # Vector database wrapper
-├── .env                       # Environment variables
-├── requirements.txt           # Python dependencies
-└── README.md                 # This file
-``` README.md                 # This file
+# Kill specific process
+Stop-Process -Name "python" -Force
+Stop-Process -Name "node" -Force
 ```
 
-## Technology Stack
+**Stop Redis:**
 
-### Backend
-- **Framework**: FastAPI
-- **LLM Provider**: Cohere (command-r-plus-08-2024)
-- **Vector Database**: ChromaDB
-- **Embeddings**: HuggingFace (sentence-transformers/all-MiniLM-L6-v2)
-- **Document Processing**: PyPDF, Tesseract OCR, EasyOCR
-- **Language**: Python 3.10+
-
-## 🛠️ Technology Stack
-
-<div align="center">
-
-### Backend Architecture
-
-```mermaid
-graph LR
-    A[FastAPI] --> B[Redis Cache]
-    A --> C[ChromaDB]
-    A --> D[LLM Provider]
-    B --> E[Local Redis]
-    B --> F[Cloud Fallback]
-    D --> G[Cohere]
-    D --> H[Groq]
-    D --> I[OpenAI]
-```
-
-</div>
-
-<table>
-<tr>
-<td width="50%">
-
-### **Backend Stack**
-
-| Component | Technology | Purpose |
-|-----------|-----------|---------|
-| Framework | FastAPI 0.104+ | High-performance async API |
-| LLM | Cohere/Groq/OpenAI | Natural language processing |
-| Vector DB | ChromaDB 0.4.18+ | Semantic similarity search |
-| Cache | Redis 7.0+ | Response caching layer |
-| Embeddings | sentence-transformers | Text vectorization |
-| OCR | Tesseract/EasyOCR | Scanned PDF processing |
-| Language | Python 3.10+ | Core runtime |
-
-</td>
-<td width="50%">
-
-### **Frontend Stack**
-
-| Component | Technology | Purpose |
-|-----------|-----------|---------|
-| Framework | Next.js 14.2.0 | React meta-framework |
-| Language | TypeScript 5.0+ | Type-safe development |
-| Styling | Tailwind CSS 3.4 | Utility-first CSS |
-| Animations | Framer Motion 11 | Smooth UI transitions |
-| HTTP | Axios 1.6+ | API communication |
-| Markdown | react-markdown | Rich text rendering |
-| Icons | Lucide React | Modern iconography |
-
-</td>
-</tr>
-</table>
-
-### **Infrastructure & DevOps**
-
+**Linux:**
 ```bash
-📦 Package Management: pip, uv, npm
-🔄 Version Control: Git
-📝 Logging: Python logging + rotating file handlers
-🗄️ Data Storage: ChromaDB (vectors) + Redis (cache)
-🔐 Security: Environment-based secrets
+sudo systemctl stop redis
 ```
-### Frontend
-- **Framework**: Next.js 14.2.0 - React framework
-- **Language**: TypeScript - Type-safe JavaScript
-- **Styling**: Tailwind CSS - Utility-first CSS
-- **Animations**: Framer Motion - Smooth UI animations
-- **HTTP Client**: Axios - Promise-based HTTP client
-- **Markdown**: react-markdown - Render formatted responses
 
-## ⚙️ Configuration
-
-### Environment Variables (.env)
-
+**macOS:**
 ```bash
-# Choose your LLM provider
-LLM_PROVIDER=cohere          # Options: cohere, groq, openai
-
-# API Keys (get from respective platforms)
-COHERE_API_KEY=your-key-here
-GROQ_API_KEY=your-key-here   # Optional, for faster responses
-
-# Self-Reflection (improves quality but adds 2-3 seconds)
-ENABLE_REFLECTION=false      # Set to 'true' for better answers
-
-# OCR Path (optional, if tesseract not in system PATH)
-# TESSERACT_PATH=/usr/bin/tesseract
+brew services stop redis
 ```
 
-### Performance Tuning
+**Windows:**
+```powershell
+# If using Memurai
+net stop Memurai
 
-Edit `config.py` to adjust performance:
-
-```python
-# Vector Search Settings
-CHUNK_SIZE = 500              # Smaller = faster, larger = more context
-CHUNK_OVERLAP = 50            # Overlap between chunks
-TOP_K_RESULTS = 1             # Number of docs to retrieve (1 = fastest)
-SIMILARITY_THRESHOLD = 0.15   # Lower = more results, higher = more selective
-
-# LLM Settings
-temperature = 0.1             # Lower = focused, higher = creative
-max_tokens = 256              # Shorter = faster responses
+# OR close redis-server window
 ```
 
-## 📚 Usage Guide
-
-### Adding Documents
-
-```bash
-# Add PDFs to knowledge base
-cp your-file.pdf data/knowledge_base/
-
-# Restart backend to index new documents
-./stop.sh
-./start.sh
-```
-
-### Using Self-Reflection
-
-Self-reflection improves answer quality by validating responses:
-
-```bash
-# Enable in .env
-ENABLE_REFLECTION=true
-
-# Restart services
-./stop.sh && ./start.sh
-```
-
-**Trade-offs:**
-- ✅ Better, more accurate answers
-- ✅ Catches incomplete responses
-- ⚠️ Adds 2-3 seconds to response time
-- ⚠️ Doubles LLM API usage
-
-### Switching LLM Providers
-
-```bash
-# Edit .env
-LLM_PROVIDER=groq  # Change to groq for 10x faster responses
-
-# Restart backend
-./stop.sh && ./start.sh
-```
-
-**Provider Comparison:**
-- **Cohere**: Best balance, reliable, good free tier
-- **Groq**: 10x faster, requires valid API key
-- **OpenAI**: Most capable, costs more
+---
 
 ## 🔧 API Reference
 
 ### Initialize Assistant
 ```bash
-POST /api/initialize
+curl -X POST http://localhost:8000/api/initialize
 ```
-Loads the knowledge base and prepares the assistant.
 
 **Response:**
 ```json
@@ -539,547 +520,265 @@ Loads the knowledge base and prepares the assistant.
   "status": "initialized",
   "stats": {
     "documents": 1819,
-    "pdfs": 3
+    "pdfs": 3,
+    "cache_enabled": true
   }
 }
 ```
 
 ### Send Message
 ```bash
-POST /api/chat
-Content-Type: application/json
+curl -X POST http://localhost:8000/api/chat \
+  -H "Content-Type: application/json" \
+  -d '{"message": "What is a data warehouse?"}'
+```
 
-{
-  "message": "What is a data warehouse?"
-}
+### Get Cache Statistics
+```bash
+curl http://localhost:8000/api/cache/stats
 ```
 
 **Response:**
 ```json
 {
-  "answer": "A data warehouse is...",
-  "source_type": "knowledge_base",
-  "sources": [
-    {
-### Get Status
-```bash
-GET /api/status
-```
-
-### Cache Management
-
-**Get Cache Statistics**
-```bash
-GET /api/cache/stats
-```
-
-## 🐛 Troubleshooting
-
-### Redis Connection Issues
-
-```bash
-# Check if Redis is running
-redis-cli ping
-# Should return: PONG
-
-# Start Redis if not running
-redis-server
-
-# Check Redis connection
-redis-cli
-127.0.0.1:6379> ping
-PONG
-
-# View cached keys
-redis-cli KEYS "mira:qa:*"
-
-# Clear all cached data
-redis-cli FLUSHDB
-```
-
-**Note**: If local Redis fails, the system automatically falls back to cloud Redis.
-
-### Backend won't start
-
-```bash
-# Check if port 8000 is already in use
-lsof -i :8000
-
-# Kill existing process
-kill -9 <PID>
-
-# Check Redis connection in logs
-tail -f api.log | grep -i redis
-
-# Restart
-./start.sh
-```
-
-**Response:**
-```json
-{
-  "status": "cache cleared",
-  "keys_deleted": 5
+  "cache_enabled": true,
+  "redis_host": "127.0.0.1:6379",
+  "total_cached": 45,
+  "cache_hits": 89,
+  "cache_misses": 12,
+  "hit_rate": "88.12%"
 }
-```   "relevance_score": "53.78%",
-      "extraction_method": "DIRECT"
-    }
-  ]
-}
+```
+
+### Clear Cache
+```bash
+curl -X POST http://localhost:8000/api/cache/clear
 ```
 
 ### Clear Chat History
 ```bash
-POST /api/clear
+curl -X POST http://localhost:8000/api/clear
 ```
 
-### Get Status
-```bash
-GET /api/status
-```
+---
 
 ## 🐛 Troubleshooting
 
-### Backend won't start
+### Port Already in Use
 
+**Linux/macOS:**
 ```bash
-# Check if port 8000 is already in use
+# Find process using port 8000
 lsof -i :8000
 
-# Kill existing process
+# Kill it
 kill -9 <PID>
 
-# Restart
-./start.sh
-```
-
-### Frontend won't start
-
-```bash
-# Check if port 3000 is in use
+# For port 3000
 lsof -i :3000
+kill -9 <PID>
+```
 
-# Kill and restart
+**Windows (PowerShell):**
+```powershell
+# Find process using port 8000
+netstat -ano | findstr :8000
+
+# Kill it
+taskkill /PID <PID> /F
+
+# For port 3000
+netstat -ano | findstr :3000
+taskkill /PID <PID> /F
+```
+
+### Redis Not Running
+
+**Linux:**
+```bash
+sudo systemctl status redis
+sudo systemctl start redis
+```
+
+**macOS:**
+```bash
+brew services list
+brew services start redis
+```
+
+**Windows:**
+```powershell
+# Check if Memurai is running
+Get-Service Memurai
+
+# Start it
+net start Memurai
+
+# OR launch redis-server.exe manually
+```
+
+### Python/Node Not Found
+
+**Windows - Add to PATH:**
+1. Search "Environment Variables" in Windows search
+2. Click "Environment Variables"
+3. Edit "Path" in System Variables
+4. Add Python and Node.js installation directories
+5. Restart terminal
+
+**Typical paths:**
+- Python: `C:\Python310\` and `C:\Python310\Scripts\`
+- Node.js: `C:\Program Files\nodejs\`
+
+### Virtual Environment Activation Error (Windows)
+
+```powershell
+# If you get execution policy error
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+
+# Then retry activation
+.\.venv\Scripts\Activate.ps1
+```
+
+### Module Not Found Errors
+
+```bash
+# Make sure virtual environment is activated
+# Then reinstall
+pip install --upgrade -r requirements.txt
+```
+
+### Frontend Build Errors
+
+```bash
 cd frontend
-npm run dev
-```
 
-### No documents found
+# Clean install
+rm -rf node_modules package-lock.json  # Linux/macOS
+# OR
+Remove-Item -Recurse -Force node_modules, package-lock.json  # Windows
 
-```bash
-# Verify PDFs are in correct location
-ls data/knowledge_base/
-
-# Check logs
-tail -f logs/app.log
-```
-
-### OCR not working
-
-```bash
-# Install Tesseract (Ubuntu/Debian)
-sudo apt-get install tesseract-ocr
-
-# Install Tesseract (macOS)
-brew install tesseract
-
-# Install Tesseract (Windows)
-# Download from: https://github.com/UB-Mannheim/tesseract/wiki
-```
-
-### API key errors
-
-```bash
-# Verify .env file exists
-ls -la .env
-
-# Check API key is set correctly
-grep COHERE_API_KEY .env
-
-# Make sure no extra spaces or quotes
-# Correct: COHERE_API_KEY=abc123
-# Wrong: COHERE_API_KEY = "abc123"
-```
-
-## 📊 Logs
-
-## ⚡ Performance Benchmarks
-
-<div align="center">
-
-### Redis Caching Impact
-
-| Metric | Without Cache | With Redis Cache | Improvement |
-|--------|--------------|------------------|-------------|
-| ⏱️ **Response Time** | 14.7 seconds | 0.030 seconds | **490x faster** |
-| 🔄 **API Calls** | Every request | First request only | **100% reduction** |
-| 💰 **Cost per Query** | $0.01 | $0.0001 (amortized) | **~99% savings** |
-| 📊 **Throughput** | ~4 req/min | ~2000 req/min | **500x increase** |
-| 🌐 **Latency** | 14700ms | 30ms | **99.8% reduction** |
-
-### Real-World Performance
-
-```bash
-# Test 1: First query (cache miss)
-$ time curl -X POST http://localhost:8000/api/chat \
-  -d '{"message":"What is machine learning?"}'
-
-Response: "Machine learning is..."
-real    0m14.782s  ❌ Slow
-
-# Test 2: Same query (cache hit)
-$ time curl -X POST http://localhost:8000/api/chat \
-  -d '{"message":"What is machine learning?"}'
-
-Response: "Machine learning is..."
-real    0m0.030s  ✅ Lightning fast!
-```
-
-### Cache Analytics Dashboard
-
-```bash
-GET /api/cache/stats
-
-{
-  "status": "healthy",
-  "enabled": true,
-  "connection": "127.0.0.1:6379",
-  "total_keys": 47,
-  "memory_usage": "2.3 MB",
-  "hit_rate": "87.4%",
-  "avg_response_time": {
-    "cached": "28ms",
-    "uncached": "13.2s"
-  },
-  "cost_savings": "$247.50/month (estimated)"
-}
-```
-
-</div>un with coverage
-pytest --cov=backend tests/
-```
-
-### Code Quality
-
-```bash
-# Format Python code
-black backend/
-
-# Lint Python code
-pylint backend/
-
-# Type check
-mypy backend/
-## ⚡ Performance Metrics
-
-### Redis Caching Impact
-
-| Metric | Without Cache | With Cache | Improvement |
-|--------|--------------|------------|-------------|
-| Response Time | 14.7s | 0.030s | **490x faster** |
-| API Calls | Every request | First request only | 100% reduction |
-| Cost | $0.01/request | $0.01/unique request | ~80% savings |
-
-### Cache Hit Rates
-
-```bash
-# Monitor cache performance
-curl http://localhost:8000/api/cache/stats
-
-# Example output:
-{
-  "enabled": true,
-  "total_keys": 25,
-  "hit_rate": "85.2%",
-  "avg_response_time_cached": "0.03s",
-  "avg_response_time_uncached": "12.5s"
-}
-```
-
-## 🗺️ Roadmap
-
-- [x] ✅ Redis caching with local + cloud fallback
-- [x] ✅ Enhanced semantic RAG with hybrid search
-- [x] ✅ Modern glassmorphism UI with animations
-- [x] ✅ Clear chat history functionality
-- [ ] 🚧 Docker containerization
-- [ ] Multi-user support with authentication
-- [ ] Document upload via web interface
-- [ ] Support for more file types (DOCX, TXT, MD)
-- [ ] Advanced filtering and search
-- [ ] Export conversations
-- [ ] Mobile app (React Native)
-- [ ] Cloud deployment guides (AWS, GCP, Azure)
-
-## 🌟 Key Features Explained
-
-### Redis Caching Architecture
-
-```
-User Question
-     ↓
-[Check Redis Cache] → Cache HIT → Return cached answer (0.03s) ⚡
-     ↓
-Cache MISS
-     ↓
-[Semantic RAG Search]
-## 🤝 Contributing
-
-We welcome contributions from the community! Whether it's bug fixes, new features, or documentation improvements.
-
-<div align="center">
-
-### Ways to Contribute
-
-| Type | Examples | Difficulty |
-|------|----------|-----------|
-| 🐛 **Bug Reports** | Issues, crashes, unexpected behavior | Easy |
-| 📝 **Documentation** | README improvements, tutorials, guides | Easy |
-| ✨ **Features** | New capabilities, enhancements | Medium |
-| 🔧 **Performance** | Optimization, caching, efficiency | Medium |
-| 🎨 **UI/UX** | Design improvements, accessibility | Medium |
-| 🏗️ **Architecture** | Refactoring, new patterns | Hard |
-
-</div>
-
-### Development Workflow
-
-```bash
-# 1. Fork & Clone
-git clone https://github.com/YOUR_USERNAME/Mira.git
-cd Mira
-
-# 2. Create Branch
-git checkout -b feature/your-feature-name
-
-# 3. Setup Environment
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-```
-MIT License - Free for personal and commercial use
-- ✅ Use commercially
-- ✅ Modify and distribute
-- ✅ Private use
-- ✅ Patent use
-- ❗ Include original license
+# Reinstall
+npm install --legacy-peer-deps
 ```
 
 ---
 
-## 🙏 Acknowledgments
+## 📊 Monitoring
 
-<table>
-<tr>
-<td align="center" width="25%">
-  <img src="https://cohere.com/favicon.ico" width="50"/><br/>
-  <b>Cohere</b><br/>
-  Powerful LLM API
-</td>
-<td align="center" width="25%">
-  <img src="https://www.langchain.com/favicon.ico" width="50"/><br/>
-  <b>LangChain</b><br/>
-  RAG Framework
-</td>
-<td align="center" width="25%">
-  <img src="https://docs.trychroma.com/img/chroma-logo.svg" width="50"/><br/>
-  <b>ChromaDB</b><br/>
-  Vector Storage
-</td>
-<td align="center" width="25%">
-  <img src="https://redis.io/images/favicons/favicon-32x32.png" width="50"/><br/>
-  <b>Redis</b><br/>
-  Caching Layer
-</td>
-</tr>
-</table>
+### View Logs
+
+**Linux/macOS:**
+```bash
+tail -f api.log
+tail -f api.log | grep -i cache
+tail -f api.log | grep -E "ERROR|Cache"
+```
+
+**Windows (PowerShell):**
+```powershell
+Get-Content api.log -Wait -Tail 50
+Get-Content api.log -Wait | Select-String "cache"
+```
+
+### Monitor Redis
+
+**All Platforms:**
+```bash
+# Connect to Redis CLI
+redis-cli
+
+# View all Mira keys
+> KEYS mira:qa:*
+
+# Get database size
+> DBSIZE
+
+# Monitor commands in real-time
+> MONITOR
+
+# View statistics
+> INFO stats
+
+# View memory usage
+> INFO memory
+```
 
 ---
 
-<div align="center">
+## ⚙️ Configuration
 
-## ⭐ Show Your Support
+### Performance Tuning
 
-**If Mira helped you, consider giving it a star!**
+Edit `config.py`:
 
-[![GitHub stars](https://img.shields.io/github/stars/gaurav-163/Mira?style=for-the-badge&logo=github)](https://github.com/gaurav-163/Mira/stargazers)
-[![GitHub forks](https://img.shields.io/github/forks/gaurav-163/Mira?style=for-the-badge&logo=github)](https://github.com/gaurav-163/Mira/network)
-[![GitHub issues](https://img.shields.io/github/issues/gaurav-163/Mira?style=for-the-badge&logo=github)](https://github.com/gaurav-163/Mira/issues)
-[![GitHub license](https://img.shields.io/github/license/gaurav-163/Mira?style=for-the-badge)](LICENSE)
-
-### Made with ❤️ by [Gaurav](https://github.com/gaurav-163)
-
-**[⬆ Back to Top](#-mira)**
-
-</div>ommit & Push
-git add .
-git commit -m "feat: add amazing feature"
-git push origin feature/your-feature-name
-
-# 7. Open Pull Request
-# Go to GitHub and create a PR from your branch
-```
-
-### Code Style Guidelines
-
-<table>
-<tr>
-<td width="50%">
-
-**Python (Backend)**
 ```python
-# Use type hints
-def process_query(question: str) -> Dict[str, Any]:
-    """Process user question with caching."""
-    pass
+# Vector Search
+CHUNK_SIZE = 500              # Smaller = faster
+CHUNK_OVERLAP = 50
+TOP_K_RESULTS = 5
+SIMILARITY_THRESHOLD = 0.3
 
-# Follow PEP 8
-# Use docstrings
-# Maximum line length: 100 characters
+# Redis Cache
+CACHE_TTL = 86400            # 24 hours
+CACHE_MAX_SIZE = 10000
+
+# LLM Settings
+TEMPERATURE = 0.1
+MAX_TOKENS = 512
 ```
 
-</td>
-<td width="50%">
+### Switch LLM Provider
 
-**TypeScript (Frontend)**
-```typescript
-// Use interfaces for props
-interface ChatProps {
-  message: string;
-  onSend: (text: string) => void;
-}
-
-// Use arrow functions
-const Component: React.FC<ChatProps> = ({ message }) => {
-  // ...
-}
+```env
+# Edit .env
+LLM_PROVIDER=groq  # Change to groq, openai, or cohere
 ```
 
-</td>
-</tr>
-</table>
-
-### Commit Message Convention
-
-```bash
-feat: Add new caching feature
-fix: Resolve Redis connection timeout
-docs: Update installation instructions
-style: Format code with black
-refactor: Simplify cache manager logic
-test: Add unit tests for semantic search
-perf: Optimize vector search performance
-chore: Update dependencies
-```
-
-### Need Help?
-
-- 💬 [GitHub Discussions](https://github.com/gaurav-163/Mira/discussions) - Ask questions
-- 🐛 [Issue Tracker](https://github.com/gaurav-163/Mira/issues) - Report bugs
-- 📧 Email: gaurav@example.com - Direct support
-
-### Contributors
-
-<a href="https://github.com/gaurav-163/Mira/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=gaurav-163/Mira" />
-</a>🤝 Contributing
-
-Contributions are welcome! Please follow these steps:
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Make your changes
-4. Add tests if applicable
-5. Commit your changes (`git commit -m 'Add amazing feature'`)
-6. Push to the branch (`git push origin feature/amazing-feature`)
-7. Open a Pull Request
-
-### Development Setup
-
-```bash
-# Clone your fork
-git clone https://github.com/YOUR_USERNAME/Mira.git
-
-# Create virtual environment
-python -m venv .venv
-source .venv/bin/activate
-
-# Install dependencies
-pip install -r requirements.txt
-cd frontend && npm install
-
-# Run tests
-pytest tests/
-```
+Then restart the backend.
 
 ---
 
-<div align="center">
-
-**Made with ❤️ by [Gaurav](https://github.com/gaurav-163)**
-
-*Star ⭐ this repo if you find it helpful!*
-
-[![GitHub stars](https://img.shields.io/github/stars/gaurav-163/Mira?style=social)](https://github.com/gaurav-163/Mira)
-[![GitHub forks](https://img.shields.io/github/forks/gaurav-163/Mira?style=social)](https://github.com/gaurav-163/Mira)
-[![GitHub issues](https://img.shields.io/github/issues/gaurav-163/Mira)](https://github.com/gaurav-163/Mira/issues)
-
-</div>
-┌─────────────┐
-│  Backend    │  FastAPI
-│   (Port     │  
-│   8000)     │
-└──────┬──────┘
-       │
-   ┌───┴────┬────────┬─────────┐
-   ↓        ↓        ↓         ↓
-┌──────┐ ┌─────┐ ┌──────┐ ┌────────┐
-│ LLM  │ │Vector│ │ OCR  │ │  PDF   │
-│Cohere│ │ DB   │ │Tess. │ │Process │
-└──────┘ └─────┘ └──────┘ └────────┘
-```
-
 ## 🤝 Contributing
 
-Contributions welcome! Please:
-
 1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Add tests if applicable
-5. Submit a pull request
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+---
 
 ## 📄 License
 
-MIT License - see LICENSE file for details
+MIT License - see [`LICENSE`](LICENSE) file for details.
+
+---
 
 ## 🙏 Acknowledgments
 
-- **Cohere** - For the powerful LLM API
-- **LangChain** - For the RAG framework
-- **ChromaDB** - For vector storage
-- **Vercel** - For Next.js framework
+- **[Cohere](https://cohere.com/)** - Powerful LLM API
+- **[Redis](https://redis.io/)** - Lightning-fast caching
+- **[LangChain](https://langchain.com/)** - RAG framework
+- **[ChromaDB](https://www.trychroma.com/)** - Vector database
+- **[Next.js](https://nextjs.org/)** - React framework
+
+---
 
 ## 📞 Support
 
-- **Issues**: https://github.com/gaurav-163/Personal-Knowledge-Assistant/issues
-- **Documentation**: See `/Docs` folder
-- **Logs**: Check `logs/app.log` for debugging
-
-## 🗺️ Roadmap
-
-- [ ] Multi-user support with authentication
-- [ ] Document upload via web interface
-- [ ] Support for more file types (DOCX, TXT, MD)
-- [ ] Advanced filtering and search
-- [ ] Export conversations
-- [ ] Mobile-responsive design improvements
-- [ ] Docker containerization
-- [ ] Cloud deployment guides
+- 🐛 **Issues**: [GitHub Issues](https://github.com/gaurav-163/Mira/issues)
+- 💬 **Discussions**: [GitHub Discussions](https://github.com/gaurav-163/Mira/discussions)
+- 📖 **Documentation**: See `Docs` folder
 
 ---
 
+<div align="center">
+
 **Made with ❤️ by [Gaurav](https://github.com/gaurav-163)**
 
-*Star ⭐ this repo if you find it helpful!*
+⭐ **Star this repo if you find it helpful!**
+
+[🏠 Home](https://github.com/gaurav-163/Mira) • [🐛 Report Bug](https://github.com/gaurav-163/Mira/issues) • [✨ Request Feature](https://github.com/gaurav-163/Mira/issues)
+
+</div>
