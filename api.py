@@ -3,6 +3,7 @@ FastAPI Backend for Personal Knowledge Assistant
 Serves the Next.js frontend
 """
 
+import logging
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
@@ -11,6 +12,13 @@ from pathlib import Path
 from assistant import HybridAssistant
 from config import Config
 from backend.utils import get_api_logger
+
+# Configure root logger to capture all module logs
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    datefmt='%Y-%m-%d %H:%M:%S'
+)
 
 logger = get_api_logger()
 
@@ -140,6 +148,26 @@ async def rebuild_kb():
     except Exception as e:
         logger.error(f"Rebuild failed: {e}")
         raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get("/api/cache/stats")
+async def get_cache_stats():
+    """Get Redis cache statistics"""
+    if assistant and assistant.is_initialized:
+        return assistant.get_cache_stats()
+    return {"error": "Assistant not initialized"}
+
+
+@app.post("/api/cache/clear")
+async def clear_cache():
+    """Clear Redis cache"""
+    if assistant and assistant.is_initialized:
+        success = assistant.cache_manager.invalidate_cache()
+        return {
+            "status": "cleared" if success else "failed",
+            "message": "Cache cleared successfully" if success else "Failed to clear cache"
+        }
+    return {"error": "Assistant not initialized"}
 
 
 if __name__ == "__main__":
